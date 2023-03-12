@@ -48,9 +48,9 @@ Plot the performance plot
 Evaluate the model with the testing data.
 
 ## PROGRAM
-**Developed By:** Shafeeq Ahamed.S
+Developed By: **Shafeeq Ahamed.S**
 <br/>
-**Register Number:** 212221230092
+Register Number: **212221230092**
 ### Importing Modules
 ```py
 #Use this to connect to google drive & Access live Sheets
