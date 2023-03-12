@@ -48,7 +48,9 @@ Plot the performance plot
 Evaluate the model with the testing data.
 
 ## PROGRAM
-
+**Developed By:** Shafeeq Ahamed.S
+<br/>
+**Register Number:** 212221230092
 ### Importing Modules
 ```py
 #Use this to connect to google drive & Access live Sheets
@@ -125,23 +127,30 @@ ai.predict(x_n_n)
 ## Dataset Information
 
 <p align="center">
-    <img width="350" alt="image" src="./dataset.png">
+    <img width="225" alt="image" src="./dataset.png">
 </p>
 
 ## OUTPUT
 
 ### Training Loss Vs Iteration Plot
 
-![Plot](./loss.png)
-![Plot](./eval.png)
+<p align="center">
+    <img width="425" alt="image" src="./loss.png">
+    </br>
+    <img width="425" alt="image" src="./eval.png">
+</p>
 
 ### Test Data Root Mean Squared Error
 
-![RMSE](./rmse.png)
+<p align="center">
+    <img width="425" alt="image" src="./rmse.png">
+</p>
 
 ### New Sample Data Prediction
 
-![Prediction](./pred.png)
+<p align="center">
+    <img width="425" alt="image" src="./pred.png">
+</p>
 
 ## RESULT
 Thus a neural network regression model for the given dataset is written and executed successfully
