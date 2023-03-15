@@ -48,109 +48,123 @@ Plot the performance plot
 Evaluate the model with the testing data.
 
 ## PROGRAM
-Developed By: **Shafeeq Ahamed.S**
-<br/>
-Register Number: **212221230092**
-### Importing Modules
+
+
 ```py
-#Use this to connect to google drive & Access live Sheets
+
+Developed by : ezhil mathi r 
+Reg.no : 212221230026
+Program to develop a neural network regression model..
+
+### To Read CSV file from Google Drive :
+
 from google.colab import auth
 import gspread
 from google.auth import default
-
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
-import matplotlib.pyplot as plt
 
-from tensorflow.keras.models import Sequential as Seq
-from tensorflow.keras.layers import Dense as Den
-from tensorflow.keras.metrics import RootMeanSquaredError as rmse
-```
-### Authenticate &  Create Dataframe using Data in Sheets
-```py
-#Authenticate
+### Authenticate User:
+
 auth.authenticate_user()
 creds, _ = default()
 gc = gspread.authorize(creds)
 
-sheet = gc.open('Multiple').sheet1 
-rows = sheet.get_all_values()
+### Open the Google Sheet and convert into DataFrame :
 
-df = pd.DataFrame(rows[1:], columns=rows[0])
-df = df.astype({'Table':'int'})
-df = df.astype({'Product':'int'})
-```
-### Assign X and Y values
-```py
-x = df[["Table"]] .values
-y = df[["Product"]].values
-```
-### Normalize the values & Split the data
-```py
-scaler = MinMaxScaler()
-scaler.fit(x)
-x_n = scaler.fit_transform(x)
+worksheet = gc.open('data').sheet1
+rows = worksheet.get_all_values()
+df = pd.DataFrame(rows[1:], columns = rows[0])
+df = df.astype({'Input':'int','Output':'int'})
 
-x_train,x_test,y_train,y_test = train_test_split(x_n,y,test_size = 0.3,random_state = 3)
-```
-### Create a Neural Network & Train it
-```py
-ai = Seq([
-    Den(8,activation = 'relu',input_shape=[1]),
-    Den(15,activation = 'relu'),
-    Den(1),
+### Import the packages :
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+df.head()
+
+X = df[['Input']].values
+y = df[['Output']].values
+X
+
+### Split Training and testing set :
+
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size = 0.33,random_state = 42)
+
+### Pre-processing the data :
+
+Scaler = MinMaxScaler()
+Scaler.fit(X_train)
+Scaler.fit(X_test)
+
+X_train1 = Scaler.transform(X_train)
+X_test1 = Scaler.transform(X_test)
+
+X_train1
+
+### Model :
+
+ai_brain = Sequential([
+    Dense(4,activation = 'relu'),
+    Dense(6,activation = 'relu'),
+    Dense(1)
 ])
 
-ai.compile(optimizer = 'rmsprop',loss = 'mse')
+ai_brain.compile(
+    optimizer = 'rmsprop',
+    loss = 'mse'
+)
 
-ai.fit(x_train,y_train,epochs=2000)
-ai.fit(x_train,y_train,epochs=2000)
+ai_brain.fit(X_train1,y_train,epochs = 4000)
+
+### Loss plot :
+
+loss_df = pd.DataFrame(ai_brain.history.history)
+
+loss_df.plot()
+
+### Testing with the test data and predicting the output :
+
+ai_brain.evaluate(X_test1,y_test)
+
+X_n1 = [[89]]
+
+X_n1_1 = Scaler.transform(X_n1)
+
+ai_brain.predict(X_n1_1)
+
 ```
-### Plot the Loss
-```py
-loss_plot = pd.DataFrame(ai.history.history)
-loss_plot.plot()
-```
-### Evaluate the model
-```py
-err = rmse()
-preds = ai.predict(x_test)
-err(y_test,preds)
-```
-### Predict for some value
-```py
-x_n1 = [[30]]
-x_n_n = scaler.transform(x_n1)
-ai.predict(x_n_n)
-```
-## Dataset Information
 
-<p align="center">
-    <img width="225" alt="image" src="./dataset.png">
-</p>
+## DATASET INFORMATION :
 
-## OUTPUT
+![dataset info()](out1.png)
 
-### Training Loss Vs Iteration Plot
+## OUTPUT:
 
-<p align="center">
-    <img width="425" alt="image" src="./loss.png">
-    </br>
-    <img width="425" alt="image" src="./eval.png">
-</p>
+### Initiation of program :
 
-### Test Data Root Mean Squared Error
+![dataset info()](out2.png)
 
-<p align="center">
-    <img width="425" alt="image" src="./rmse.png">
-</p>
+![dataset info()](out3.png)
 
-### New Sample Data Prediction
+![dataset info()](out4.png)
 
-<p align="center">
-    <img width="425" alt="image" src="./pred.png">
-</p>
+### Training Loss Vs Iteration Plot :
 
-## RESULT
-Thus a neural network regression model for the given dataset is written and executed successfully
+![dataset info()](out5.png)
+
+![dataset info()](out6.png)
+
+### Test Data Root Mean Squared Error :
+
+![dataset info()](out7.png)
+
+### New Sample Data Prediction :
+
+![dataset info()](out8.png)
+
+## RESULT :
+
+Thus a neural network model for regression using the given dataset is written and executed successfully.
